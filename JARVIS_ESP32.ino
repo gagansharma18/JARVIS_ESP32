@@ -14,136 +14,9 @@ using WebServerClass = WebServer;
 #define TITLE       "J.A.R.V.I.S."
 #define HOST_NAME       "jarvis"
 #define HOME_URI        "/"
-#define PARAM_FILE      "/settings.json"
-
-static const char PAGE_SETTINGS[] PROGMEM = R"(
-{
-  "uri": "/settings",
-  "title": "Settings",
-  "menu": true,
-  "element": [
-    {
-      "name": "sub_heading",
-      "type": "ACText",
-      "value": "Here you can save JARVIS configuration",
-      "style": "font-family:Arial;font-size:18px;font-weight:400;color:#191970"
-    },
-    {
-      "name": "no_of_leds",
-      "type": "ACInput",
-      "label": "LEDS",
-      "labelposition": "infront",
-      "placeholder": "Enter no of leds"
-    },
-    {
-      "name": "relay_config",
-      "type": "ACText",
-      "value": "Configure your devices you want to operate from relays",
-      "style": "font-family:Arial;font-size:18px;font-weight:400;color:#191970"
-    },
-    {
-      "name": "device1",
-      "type": "ACInput",
-      "label": "Device 1",
-      "labelposition": "infront1",
-      "placeholder": "Enter device name"
-    },
-    {
-      "name": "device2",
-      "type": "ACInput",
-      "label": "Device 2",
-      "labelposition": "infront",
-      "placeholder": "Enter device name"
-    },
-    {
-      "name": "device3",
-      "type": "ACInput",
-      "label": "Device 3",
-      "labelposition": "infront",
-      "placeholder": "Enter device name"
-    },
-    {
-      "name": "device4",
-      "type": "ACInput",
-      "label": "Device 4",
-      "labelposition": "infront",
-      "placeholder": "Enter device name"
-    },
-    {
-      "name": "device5",
-      "type": "ACInput",
-      "label": "Device 5",
-      "labelposition": "infront",
-      "placeholder": "Enter device name"
-    },
-    {
-      "name": "device6",
-      "type": "ACInput",
-      "label": "Device 6",
-      "labelposition": "infront",
-      "placeholder": "Enter device name"
-    },
-    {
-      "name": "device7",
-      "type": "ACInput",
-      "label": "Device 7",
-      "labelposition": "infront",
-      "placeholder": "Enter device name"
-    },
-    {
-      "name": "device8",
-      "type": "ACInput",
-      "label": "Device 8",
-      "labelposition": "infront",
-      "placeholder": "Enter device name"
-    },
-    {
-      "name": "load",
-      "type": "ACSubmit",
-      "value": "Load",
-      "uri": "/settings"
-    },
-    {
-      "name": "save",
-      "type": "ACSubmit",
-      "value": "Save",
-      "uri": "/save"
-    },
-    {
-      "name": "adjust_width",
-      "type": "ACElement",
-      "value": "<script type=\"text/javascript\">window.onload=function(){var t=document.querySelectorAll(\"input[type='text']\");for(i=0;i<t.length;i++){var e=t[i].getAttribute(\"placeholder\");e&&t[i].setAttribute(\"size\",e.length*.8)}};</script>"
-    }
-  ]
-}
-)";
-
-static const char PAGE_SAVE[] PROGMEM = R"(
-{
-  "uri": "/save",
-  "title": "Settings",
-  "menu": false,
-  "element": [
-    {
-      "name": "caption",
-      "type": "ACText",
-      "format": "Settings have been saved to %s",
-      "style": "font-family:Arial;font-size:18px;font-weight:400;color:#191970"
-    },
-    {
-      "name": "echo",
-      "type": "ACText",
-      "style": "font-family:monospace;font-size:small;white-space:pre;"
-    },
-    {
-      "name": "ok",
-      "type": "ACSubmit",
-      "value": "OK",
-      "uri": "/settings"
-    }
-  ]
-}
-)";
+#define PARAM_FILE      "/settings.json" //not adding in data folder because everytime you upload data it wil reset you configured values
+#define PAGE_SAVE      "/PAGE_SAVE.json"
+#define PAGE_SETTINGS   "/PAGE_SETTINGS.json"
 
 WebServerClass  server;
 AutoConnect portal(server);
@@ -166,7 +39,13 @@ void setup() {
   // Load a custom web page described in JSON as PAGE_SETTINGS and
   // register a handler. This handler will be invoked from
   // AutoConnectSubmit named the Load defined on the same page.
-  settingsAux.load(FPSTR(PAGE_SETTINGS));
+  SPIFFS.begin();
+   File page_setttings = SPIFFS.open("/PAGE_SETTINGS.json", "r");
+      if (page_setttings) {
+        settingsAux.load(page_setttings);
+        page_setttings.close();
+      }
+  SPIFFS.end();
   settingsAux.on([] (AutoConnectAux& aux, PageArgument& arg) {
     if (portal.where() == "/settings") {
       // Use the AutoConnect::where function to identify the referer.
@@ -183,8 +62,13 @@ void setup() {
     }
     return String();
   });
-
-  saveAux.load(FPSTR(PAGE_SAVE));
+  SPIFFS.begin();
+      File page_save = SPIFFS.open(PAGE_SAVE, "r");
+      if (page_save) {
+        saveAux.load(page_save);
+        page_save.close();
+      }
+  SPIFFS.end();
   saveAux.on([] (AutoConnectAux& aux, PageArgument& arg) {
     // You can validate input values ​​before saving with
     // AutoConnectInput::isValid function.

@@ -1,0 +1,99 @@
+{
+  "uri": "/settings",
+  "title": "Settings",
+  "menu": true,
+  "element": [
+    {
+      "name": "sub_heading",
+      "type": "ACText",
+      "value": "Here you can save JARVIS configuration",
+      "style": "font-family:Arial;font-size:18px;font-weight:400;color:#191970"
+    },
+    {
+      "name": "no_of_leds",
+      "type": "ACInput",
+      "label": "LEDS",
+      "labelposition": "infront",
+      "placeholder": "Enter no of leds"
+    },
+    {
+      "name": "relay_config",
+      "type": "ACText",
+      "value": "Configure your devices you want to operate from relays",
+      "style": "font-family:Arial;font-size:18px;font-weight:400;color:#191970"
+    },
+    {
+      "name": "device1",
+      "type": "ACInput",
+      "label": "Device 1",
+      "labelposition": "infront1",
+      "placeholder": "Enter device name"
+    },
+    {
+      "name": "device2",
+      "type": "ACInput",
+      "label": "Device 2",
+      "labelposition": "infront",
+      "placeholder": "Enter device name"
+    },
+    {
+      "name": "device3",
+      "type": "ACInput",
+      "label": "Device 3",
+      "labelposition": "infront",
+      "placeholder": "Enter device name"
+    },
+    {
+      "name": "device4",
+      "type": "ACInput",
+      "label": "Device 4",
+      "labelposition": "infront",
+      "placeholder": "Enter device name"
+    },
+    {
+      "name": "device5",
+      "type": "ACInput",
+      "label": "Device 5",
+      "labelposition": "infront",
+      "placeholder": "Enter device name"
+    },
+    {
+      "name": "device6",
+      "type": "ACInput",
+      "label": "Device 6",
+      "labelposition": "infront",
+      "placeholder": "Enter device name"
+    },
+    {
+      "name": "device7",
+      "type": "ACInput",
+      "label": "Device 7",
+      "labelposition": "infront",
+      "placeholder": "Enter device name"
+    },
+    {
+      "name": "device8",
+      "type": "ACInput",
+      "label": "Device 8",
+      "labelposition": "infront",
+      "placeholder": "Enter device name"
+    },
+    {
+      "name": "load",
+      "type": "ACSubmit",
+      "value": "Load",
+      "uri": "/settings"
+    },
+    {
+      "name": "save",
+      "type": "ACSubmit",
+      "value": "Save",
+      "uri": "/save"
+    },
+    {
+      "name": "adjust_width",
+      "type": "ACElement",
+      "value": "<script type=\"text/javascript\">window.onload=function(){var t=document.querySelectorAll(\"input[type='text']\");for(i=0;i<t.length;i++){var e=t[i].getAttribute(\"placeholder\");e&&t[i].setAttribute(\"size\",e.length*.8)}};</script>"
+    }
+  ]
+}
