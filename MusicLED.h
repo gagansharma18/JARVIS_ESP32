@@ -1,10 +1,11 @@
 #include <Adafruit_NeoPixel.h>
+TaskHandle_t TaskMusicLED; 
+
 const int micPin = 34;
 const int pixelPin = 5;
 const int MaxPixelCount = 300;
-int pixelCount = 80;
+int pixelCount = 300;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(pixelCount, pixelPin, NEO_GRB + NEO_KHZ800);
-TaskHandle_t TaskMusicLED; 
 #include "Audio.h"
 void MusicFunc(void * pvParameters){
  Serial.print("MUSIC running on core ");
@@ -23,14 +24,15 @@ void MusicFunc(void * pvParameters){
         oldTime = time;
         display();
       }
-     vTaskDelay(10);
+     vTaskDelay(1);
    }
   }
   
 void LoadMusicLED(){
   AutoConnectInput& noOfLEDs = settingsAux.getElement<AutoConnectInput>("no_of_leds");
-  pixelCount = noOfLEDs.value.toInt();
-  strip = Adafruit_NeoPixel(pixelCount, pixelPin, NEO_GRB + NEO_KHZ800);
+  if(noOfLEDs.value.toInt() > 0){
+    pixelCount = noOfLEDs.value.toInt();
+  }
   strip.begin();
   strip.show();
 xTaskCreatePinnedToCore(

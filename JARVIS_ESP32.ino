@@ -100,6 +100,11 @@ void setup() {
         settingsAux.load(page_settings);
         page_settings.close();
       }
+   File param = SPIFFS.open(PARAM_FILE, "r");
+      if (param) {
+        settingsAux.loadElement(param, { "sub_heading", "no_of_leds", "relay_config", "device1", "device2", "device3", "device4", "device5", "device6", "device7", "device8" } );
+        param.close();
+      }
   SPIFFS.end();
   settingsAux.on([] (AutoConnectAux& aux, PageArgument& arg) {
     if (portal.where() == "/settings") {

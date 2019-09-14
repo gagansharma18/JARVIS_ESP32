@@ -59,7 +59,7 @@ void display()
     Serial.print(" b=");
     Serial.print(b);
     Serial.println("");*/
-    strip.setPixelColor(i, strip.Color(r, g, b));     
+    strip.setPixelColor(i, strip.Color(r, g, b));
   }
   // Serial.println("######");
   strip.show(); 
