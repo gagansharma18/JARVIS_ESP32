@@ -88,47 +88,14 @@ void setup() {
   Serial.println();
   Serial.print("JARVIS running on core ");
   Serial.println(xPortGetCoreID());
-  
-  //AUDIO MUSIC
-  LoadMusicLED();
-  //AUDIO MUSIC END
   // Responder of root page handled directly from WebServer class.
   server.on("/", handleRoot);
   server.on("/io", handleGPIO);
-/*
-SPIFFS.begin();
- File filedata = SPIFFS.open(PARAM_FILE, "r");
-        if (filedata) {
-         /* Serial.print("PARAMS = ");
-
-          while(filedata.available()){
-           
-                  Serial.write(filedata.read());
-              }
-          
-          Serial.print(filedata);* /
-          AutoConnectAux  aux;
-          aux.load(filedata);
-          
-          // Retrieve the pointer of the AutoConnectText
-          AutoConnectInput* text = reinterpret_cast<AutoConnectInput*>(aux.getElement("no_of_leds"));
-          
-          // Retrieve the reference of the AutoConnectText
-          //AutoConnectInput& text = aux.getElement<AutoConnectInput>("no_of_leds");
-          Serial.println("DATA = ");
-          Serial.println(text.value);
-          filedata.close();
-        }
-SPIFFS.end();
-//AutoConnectText& text = aux->getElement<AutoConnectText>("no_of_leds");  // Cast to real type and access members
-//Serial.println(text.value);
-*/
-
   // Load a custom web page described in JSON as PAGE_SETTINGS and
   // register a handler. This handler will be invoked from
   // AutoConnectSubmit named the Load defined on the same page.
   SPIFFS.begin();
-   File page_settings = SPIFFS.open("/PAGE_SETTINGS.json", "r");
+   File page_settings = SPIFFS.open(PAGE_SETTINGS, "r");
       if (page_settings) {
         settingsAux.load(page_settings);
         page_settings.close();
@@ -203,6 +170,15 @@ SPIFFS.end();
       MDNS.addService("http", "tcp", 80);
     }
   }
+
+
+//// MUSIC LED
+//  AutoConnectInput& noOfLEDs = settingsAux.getElement<AutoConnectInput>("no_of_leds");
+//  pixelCount = noOfLEDs.value.toInt();
+//  strip = Adafruit_NeoPixel(pixelCount, pixelPin, NEO_GRB + NEO_KHZ800);
+
+  LoadMusicLED();
+  // MUSIC LED END
 }
 
 void loop() {
