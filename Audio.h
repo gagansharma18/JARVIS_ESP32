@@ -1,5 +1,5 @@
 #pragma once
-const int msPerPixel = 4;
+const int msPerPixel = 4;//4;
 int currentMaxValue = 0;
 int maxValues[MaxPixelCount] = {0};
 int colors[MaxPixelCount][3] = {0};
@@ -8,10 +8,10 @@ void analyze()
 {
   static int color[3] = {0};
   static bool under = true;
-  static double level = 512;
+  static double level = 512;//512;
   static int maxValue = 0;
   int a = analogRead(micPin);
-  //Serial.println(pixelCount);
+ // Serial.println(a);
   level = level * 0.999 + a * 0.001;
   a -= int(level);
   int time = millis();
@@ -51,17 +51,15 @@ void display()
     int g = (w * colors[j][1]) >> 8;
     int b = (w * colors[j][2]) >> 8;
 
-   /* Serial.print(i);
-    Serial.print(" r=");
-    Serial.print(r);
-    Serial.print(" g=");
+   // Serial.print(i);
+   // Serial.print(",");
+    /*Serial.print(r);
+    Serial.print(",");
     Serial.print(g);
-    Serial.print(" b=");
-    Serial.print(b);
-    Serial.println("");*/
+    Serial.print(",");
+    Serial.println(b);*/
     strip.setPixelColor(i, strip.Color(r, g, b));
   }
-  // Serial.println("######");
   strip.show(); 
- // Serial.println(maxValues[currentMaxValue]);
+  //Serial.println(maxValues[currentMaxValue]);
 }
