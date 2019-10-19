@@ -11,7 +11,8 @@ void analyze()
   static double level = 512;//512;
   static int maxValue = 0;
   int a = analogRead(micPin);
- // Serial.println(a);
+  //a = map(a, 0, 4095, 0, 1024); //CONVERT 12 bit to 10 bit
+  Serial.println(a);
   level = level * 0.999 + a * 0.001;
   a -= int(level);
   int time = millis();

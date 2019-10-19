@@ -1,11 +1,11 @@
 #include <Adafruit_NeoPixel.h>
 TaskHandle_t TaskMusicLED; 
 
-const int micPin = 36;  
+const int micPin = 34;  
 const int pixelPin = 5;//
 const int MaxPixelCount = 300;
 int pixelCount = 300;
-int delayLoop = 7020/pixelCount;
+//int delayLoop = 7020/pixelCount;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(pixelCount, pixelPin, NEO_GRB + NEO_KHZ800);
 #include "Audio.h"
 void MusicFunc(void * pvParameters){
@@ -20,7 +20,7 @@ void MusicFunc(void * pvParameters){
     time = t;
     analyze();
    static int oldTime = 0;
-    if(time - oldTime >= delayLoop){
+    if(time - oldTime >= 30){ //delayLoop
         oldTime = time;
         display();
       }
